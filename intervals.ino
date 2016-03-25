@@ -1,99 +1,98 @@
-
-const int ledPin8 = 8; 
-const int ledPin9 = 9;
-const int ledPin10 = 10;
-const int ledPin12 = 12;
-const int ledPin13 = 13;
-int ledState8 = LOW;            
-int ledState9 = LOW;   
-int ledState10 = LOW;   
-int ledState12 = LOW;   
-int ledState13 = LOW;  
- 
-unsigned long previousMillis = 0;        
-
-// constants won't change :
-const long interval8 = 1000;          
-const long interval9 = 500;  
-const long interval10 = 333;  
-const long interval12 = 250;  
-const long interval13 = 200;
+const int ledPin1 = 13; 
+const int ledPin2 = 12; 
+const int ledPin3 = 11; 
+const int ledPin4 = 10; 
+const int ledPin5 = 9; 
 
 
+int ledState1 = LOW; 
+int ledState2 = LOW; 
+int ledState3 = LOW; 
+int ledState4 = LOW; 
+int ledState5 = LOW; 
 
-void setup() {
-  pinMode(ledPin8, OUTPUT);
-   pinMode(ledPin9, OUTPUT);
-    pinMode(ledPin10, OUTPUT);
-     pinMode(ledPin12, OUTPUT);
-      pinMode(ledPin13, OUTPUT);
-}
+long previousMillis1 = 0; 
+long previousMillis2 = 0; 
+long previousMillis3 = 0; 
+long previousMillis4 = 0; 
+long previousMillis5 = 0; 
 
-void loop() {
-  delay(3);
-  unsigned long currentMillis = millis();
+long interval1 = 1000; 
+long interval2 = 500; 
+long interval3 = 333; 
+long interval4 = 250; 
+long interval5 = 100; 
 
-  if (currentMillis - previousMillis >= interval8) {
-    previousMillis = currentMillis;
-    
-    if (ledState8 == LOW) {
-      ledState8 = HIGH;
-    } else {
-      ledState8 = LOW;
-    }
-    digitalWrite(ledPin8, ledState8);
-  }
 
-delay(3);
-  unsigned long currentMillis = millis();
- if (currentMillis - previousMillis >= interval9) {
-    previousMillis = currentMillis;
+void setup() { 
+pinMode(ledPin1, OUTPUT); 
+pinMode(ledPin2, OUTPUT); 
+pinMode(ledPin3, OUTPUT); 
+pinMode(ledPin4, OUTPUT); 
+pinMode(ledPin5, OUTPUT); 
 
-    // if the LED is off turn it on and vice-versa:
-    if (ledState9 == LOW) {
-      ledState9 = HIGH;
-    } else {
-      ledState9 = LOW;
-    }
-    digitalWrite(ledPin9, ledState9);
-  }
+} 
 
-  delay(3);
-  unsigned long currentMillis = millis();
-   if (currentMillis - previousMillis >= interval10) {
-    previousMillis = currentMillis;
-    if (ledState10 == LOW) {
-      ledState10 = HIGH;
-    } else {
-      ledState10 = LOW;
-    } 
-    digitalWrite(ledPin10, ledState10);
-  }
+void loop() 
+{ 
 
-delay(3);
-  unsigned long currentMillis = millis();
-   if (currentMillis - previousMillis >= interval12) {
-    previousMillis = currentMillis;
+unsigned long currentMillis = millis(); 
 
-    if (ledState12 == LOW) {
-      ledState12 = HIGH;
-    } else {
-      ledState12 = LOW;
-    }
-    digitalWrite(ledPin12, ledState12);
-  }
+//LedPin1 
+if(currentMillis - previousMillis1 > interval1) { 
+// сохраняем время последнего переключения 
+previousMillis1 = currentMillis; 
 
-  
-delay(3);
-   if (currentMillis - previousMillis >= interval13) {
-    previousMillis = currentMillis;
-    if (ledState13 == LOW) {
-      ledState13 = HIGH;
-    } else {
-      ledState13 = LOW;
-    }
-    digitalWrite(ledPin13, ledState13);
-  }
-  
+// если светодиод не горит, то зажигаем, и наоборот 
+if (ledState1 == LOW) 
+ledState1 = HIGH; 
+else 
+ledState1 = LOW; 
+
+// устанавливаем состояния выхода, чтобы включить или выключить светодиод 
+digitalWrite(ledPin1, ledState1); 
+} 
+
+
+//LedPin2 
+if(currentMillis - previousMillis2 > interval2) { 
+previousMillis2 = currentMillis; 
+if (ledState2 == LOW) 
+ledState2 = HIGH; 
+else 
+ledState2 = LOW; 
+digitalWrite(ledPin2, ledState2); 
+} 
+
+//LedPin3 
+if(currentMillis - previousMillis3 > interval3) { 
+previousMillis3 = currentMillis; 
+if (ledState3 == LOW) 
+ledState3 = HIGH; 
+else 
+ledState3 = LOW; 
+digitalWrite(ledPin3, ledState3); 
+} 
+
+//LedPin4 
+if(currentMillis - previousMillis4 > interval4) { 
+previousMillis4 = currentMillis; 
+if (ledState4 == LOW) 
+ledState4 = HIGH; 
+else 
+ledState4 = LOW; 
+digitalWrite(ledPin4, ledState4); 
+} 
+
+//LedPin5 
+if(currentMillis - previousMillis1 > interval5) { 
+previousMillis5 = currentMillis; 
+if (ledState5 == LOW) 
+ledState5 = HIGH; 
+else 
+ledState5 = LOW; 
+digitalWrite(ledPin5, ledState5); 
+} 
+
 }
 
