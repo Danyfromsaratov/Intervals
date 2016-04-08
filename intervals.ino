@@ -1,98 +1,73 @@
-const int ledPin1 = 13; 
-const int ledPin2 = 12; 
-const int ledPin3 = 11; 
-const int ledPin4 = 10; 
-const int ledPin5 = 9; 
+int led1 = 13;
+int led2 = 12;
+int led3 = 11;
+int led4 = 10;
+int led5 = 9;
+unsigned long interval1 = 200000;
+unsigned long interval2 = 250000;
+unsigned long interval3 = 333;
+unsigned long interval4 = 500;
+unsigned long interval5 = 1000;
+int state1 = LOW;
+int state2 = LOW;
+int state3 = LOW;
+int state4 = LOW;
+int state5 = LOW;
+unsigned long previousMicros1 = 0;
+unsigned long previousMicros2 = 0;
+unsigned long previousMillis3 = 0;
+unsigned long previousMillis4 = 0;
+unsigned long previousMillis5 = 0;
 
-
-int ledState1 = LOW; 
-int ledState2 = LOW; 
-int ledState3 = LOW; 
-int ledState4 = LOW; 
-int ledState5 = LOW; 
-
-long previousMillis1 = 0; 
-long previousMillis2 = 0; 
-long previousMillis3 = 0; 
-long previousMillis4 = 0; 
-long previousMillis5 = 0; 
-
-long interval1 = 1000; 
-long interval2 = 500; 
-long interval3 = 333; 
-long interval4 = 250; 
-long interval5 = 100; 
-
-
-void setup() { 
-pinMode(ledPin1, OUTPUT); 
-pinMode(ledPin2, OUTPUT); 
-pinMode(ledPin3, OUTPUT); 
-pinMode(ledPin4, OUTPUT); 
-pinMode(ledPin5, OUTPUT); 
-
-} 
-
-void loop() 
-{ 
-
-unsigned long currentMillis = millis(); 
-
-//LedPin1 
-if(currentMillis - previousMillis1 > interval1) { 
-// сохраняем время последнего переключения 
-previousMillis1 = currentMillis; 
-
-// если светодиод не горит, то зажигаем, и наоборот 
-if (ledState1 == LOW) 
-ledState1 = HIGH; 
-else 
-ledState1 = LOW; 
-
-// устанавливаем состояния выхода, чтобы включить или выключить светодиод 
-digitalWrite(ledPin1, ledState1); 
-} 
-
-
-//LedPin2 
-if(currentMillis - previousMillis2 > interval2) { 
-previousMillis2 = currentMillis; 
-if (ledState2 == LOW) 
-ledState2 = HIGH; 
-else 
-ledState2 = LOW; 
-digitalWrite(ledPin2, ledState2); 
-} 
-
-//LedPin3 
-if(currentMillis - previousMillis3 > interval3) { 
-previousMillis3 = currentMillis; 
-if (ledState3 == LOW) 
-ledState3 = HIGH; 
-else 
-ledState3 = LOW; 
-digitalWrite(ledPin3, ledState3); 
-} 
-
-//LedPin4 
-if(currentMillis - previousMillis4 > interval4) { 
-previousMillis4 = currentMillis; 
-if (ledState4 == LOW) 
-ledState4 = HIGH; 
-else 
-ledState4 = LOW; 
-digitalWrite(ledPin4, ledState4); 
-} 
-
-//LedPin5 
-if(currentMillis - previousMillis1 > interval5) { 
-previousMillis5 = currentMillis; 
-if (ledState5 == LOW) 
-ledState5 = HIGH; 
-else 
-ledState5 = LOW; 
-digitalWrite(ledPin5, ledState5); 
-} 
-
+void setup()
+{
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  pinMode(led4, OUTPUT);
+  pinMode(led5, OUTPUT);
+  Serial.begin(9600);
 }
 
+void function(unsigned long time, int led, unsigned long interval, unsigned long &previous, int &state)
+{
+  if (time - previous > interval)
+  {
+    state = !state;
+    previous = time;
+    digitalWrite(led, state);
+  }
+}
+
+void loop()
+{
+  unsigned long timeMillis = millis();
+  function(timeMillis/1000, led1, interval1, previousMicros1, state1);
+  function(timeMillis/1000, led2, interval2, previousMicros2, state2);
+  function(timeMillis, led3, interval3, previousMillis3, state3);
+  function(timeMillis, led4, interval4, previousMillis4, state4);
+  function(timeMillis, led5, interval5, previousMillis5, state5);
+  if (Serial.available() > 0)
+  {
+    String split = Serial.readString();
+    Serial.println("led = " + split.substring(0, 1) + " interval = " + split.substring(2, split.length()));
+    switch (split.substring(0, 1).toInt())
+    {
+      case 1:
+        interval1 = split.substring(2, split.length()).toInt();
+        break;
+      case 2:
+        interval2 = split.substring(2, split.length()).toInt();
+        break;
+      case 3:
+        interval3 = split.substring(2, split.length()).toInt();
+        break;
+      case 4:
+        interval4 = split.substring(2, split.length()).toInt();
+        break;
+      case 5:
+        interval5 = split.substring(2, split.length()).toInt();
+        break;
+    }
+  }
+}
